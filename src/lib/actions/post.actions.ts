@@ -10,7 +10,9 @@ export async function createMarketingPost(formData: CreateMarketingPostParams) {
   await db.insert(marketingPostTable).values(formData);
 }
 
-export async function getMarketingPostByDate(date: any): Promise<Array<{}>> {
+export async function getMarketingPostByDate(
+  date: any
+): Promise<Array<CreateMarketingPostParams>> {
   return db
     .select()
     .from(marketingPostTable)

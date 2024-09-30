@@ -67,7 +67,7 @@ export type fileUploaderProps = {
 };
 
 export type CreateMarketingPostParams = {
-  imageUrl?: string;
-  copy?: string;
-  date: string;
+  imageUrl?: string | null;
+  copy?: string | null;
+  date?: string | null;
 };

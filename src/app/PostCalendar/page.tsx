@@ -20,12 +20,27 @@ import {
 } from "@/lib/actions/post.actions";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
+import MarketingPostCard from "@/components/MarketingPostCard";
 
-interface MarketingPost {
-  imageUrl: string;
-  copy: string;
-  date: string;
-}
+// interface MarketingPost {
+//   imageUrl: string;
+//   copy: string;
+//   date: string;
+// }
+
+let fullfilled = false;
+let promise: Promise<void> | null = null;
+
+const useTimeout = (ms: number) => {
+  if (!fullfilled) {
+    throw (promise ||= new Promise((res) => {
+      setTimeout(() => {
+        fullfilled = true;
+        res();
+      }, ms);
+    }));
+  }
+};
 
 export default async function PostCalendar() {
   const [date, setDate] = useState("");
@@ -33,32 +48,9 @@ export default async function PostCalendar() {
     new Date()
   );
 
-  const [post, setPost] = useState({});
-  const state = {
-    value: "",
-    copied: false,
-  };
-
-  const [copied, setCopiedId] = useState<string>();
-  const [copiedText, setCopiedText] = useState<string>();
-  const [copiedImage, setCopiedImage] = useState<string>();
-
   useEffect(() => {
-    const fetchData = async () => {
-      const result: MarketingPost[] = await getMarketingPostByDate(date);
-
-      // const post: MarketingPost = await getMarketingPostByDate(date);
-      // .then((res) => res.json());
-      console.log("result", result);
-
-      const post = result[result.length - 1];
-
-      setPost(post);
-    };
-    fetchData();
-  }, [date]);
-
-  //   const action = useAction(formData.getValues());
+    setCalendarValue(new Date());
+  }, [2000]);
 
   return (
     <div className="flex flex-col md:flex-row md:items-start justify-around md:mt-48 m-8">
@@ -73,7 +65,7 @@ export default async function PostCalendar() {
               mode="single"
               selected={calendarValue}
               onSelect={(date) => {
-                setDate(date!.toISOString());
+                setDate(date?.toISOString());
                 setCalendarValue(date);
                 console.log("Calendar Date Selected:", date?.toISOString()); // Log selected date from Calendar
               }}
@@ -85,39 +77,7 @@ export default async function PostCalendar() {
       <div>
         <h1 className="w-full"></h1>
 
-        {post ? (
-          <div>
-            <div className="flex flex-col justify-center items-center">
-              <Image
-                src={post?.imageUrl}
-                alt="imageUrl"
-                width={250}
-                height={250}
-                className="rounded-md"
-              />
-            </div>
-            <Textarea className="mt-4 h-40" readOnly value={post?.copy} />
-
-            <div className="flex justify-end mt-2 h-40">
-              <Button
-                className=""
-                onClick={async () => {
-                  if ("clipboard" in navigator) {
-                    await navigator.clipboard.writeText(`${post?.copy}`);
-                  } else {
-                    copy("await navigator.clipboard.writeText()");
-                  }
-
-                  setCopiedId("write-text");
-                }}
-              >
-                {copied === "write-text" ? "Copy" : "Copy"}
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <h1>no post scheduled</h1>
-        )}
+        {date ? <MarketingPostCard date={date} /> : <h1>no post scheduled</h1>}
       </div>
     </div>
   );
