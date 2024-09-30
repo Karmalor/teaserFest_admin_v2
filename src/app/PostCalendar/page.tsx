@@ -42,7 +42,7 @@ const useTimeout = (ms: number) => {
   }
 };
 
-export default async function PostCalendar() {
+export default function PostCalendar() {
   const [date, setDate] = useState("");
   const [calendarValue, setCalendarValue] = React.useState<Date | undefined>(
     new Date()
@@ -50,7 +50,16 @@ export default async function PostCalendar() {
 
   useEffect(() => {
     setCalendarValue(new Date());
-  }, [2000]);
+
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() - 1);
+
+    setDate(tomorrow.toISOString().split("T")[0]);
+  }, [useTimeout(1000)]);
+
+  console.log("Calendar Value", calendarValue);
+  console.log("Date", date);
 
   return (
     <div className="flex flex-col md:flex-row md:items-start justify-around md:mt-48 m-8">
@@ -65,9 +74,12 @@ export default async function PostCalendar() {
               mode="single"
               selected={calendarValue}
               onSelect={(date) => {
-                setDate(date?.toISOString());
+                setDate(date?.toISOString().split("T")[0]);
                 setCalendarValue(date);
-                console.log("Calendar Date Selected:", date?.toISOString()); // Log selected date from Calendar
+                console.log(
+                  "Calendar Date Selected:",
+                  date?.toISOString().split("T")[0]
+                ); // Log selected date from Calendar
               }}
               className="rounded-md border shadow flex justify-center"
             />

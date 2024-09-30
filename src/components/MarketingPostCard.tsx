@@ -52,8 +52,6 @@ const MarketingPostCard = ({ date }: { date: string }) => {
         date.split("T")[0]
       );
 
-      // const post: MarketingPost = await getMarketingPostByDate(date);
-      // .then((res) => res.json());
       console.log("result", result);
 
       if (result) {
