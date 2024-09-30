@@ -73,22 +73,13 @@ export function PostCalendar() {
               mode="single"
               selected={calendarValue}
               onSelect={(date) => {
-                setDate(date?.toISOString());
+                setDate(date!.toISOString());
                 setCalendarValue(date);
                 console.log("Calendar Date Selected:", date?.toISOString()); // Log selected date from Calendar
               }}
               className="rounded-md border shadow flex justify-center"
             />
           </div>
-          {/* <Button
-            type="button"
-            onClick={() => {
-              console.log("Date Value from Form:", date); // Log the value retrieved from the form
-            }}
-            className="mt-4"
-          >
-            Submit
-          </Button> */}
         </form>
       </div>
       <div>
@@ -111,8 +102,6 @@ export function PostCalendar() {
               <Button
                 className=""
                 onClick={async () => {
-                  // Writing text with writeText and a fallback using copy-to-clipboard
-
                   if ("clipboard" in navigator) {
                     await navigator.clipboard.writeText(`${post?.copy}`);
                   } else {
