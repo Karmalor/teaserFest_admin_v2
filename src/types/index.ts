@@ -31,7 +31,7 @@ export type CreateOrderParams = {
   stripeId: string;
   buyerId: string;
   amount: string;
-  createdAt: any;
+  createdAt: Date | string;
 };
 
 // export type GetOrdersByEventParams = {
@@ -51,7 +51,7 @@ export type CreateApplicationParams = {
   stageName: string;
   tagline: string;
   applicationSubmitted: boolean;
-  applicantResponse: {} | null;
+  applicantResponse: object | null;
   createdAt: Date;
 };
 
