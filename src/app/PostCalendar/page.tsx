@@ -27,7 +27,7 @@ interface MarketingPost {
   date: string;
 }
 
-export function PostCalendar() {
+export default async function PostCalendar() {
   const [date, setDate] = useState("");
   const [calendarValue, setCalendarValue] = React.useState<Date | undefined>(
     new Date()
@@ -122,5 +122,3 @@ export function PostCalendar() {
     </div>
   );
 }
-
-export default PostCalendar;
