@@ -30,7 +30,7 @@ export default async function Home() {
   console.log(applications);
 
   return (
-    <div className="flex items-start justify-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="flex flex-col md:flex-row md:items-start md:justify-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <Link href={"/Performers"}>
         <Button>Performers</Button>
       </Link>
