@@ -62,7 +62,7 @@ export default function PostCalendar() {
   console.log("Date", date);
 
   return (
-    <div className="flex flex-col md:flex-row md:items-start justify-around md:mt-48 m-8">
+    <div className="flex flex-col md:flex-row md:items-start justify-around md:mt-16 m-8">
       <div>
         <form>
           <div className="my-4">
@@ -89,7 +89,7 @@ export default function PostCalendar() {
       <div>
         <h1 className="w-full"></h1>
 
-        {date ? <MarketingPostCard date={date} /> : <h1>no post scheduled</h1>}
+        {date ? <MarketingPostCard date={date} /> : <h1>No post scheduled</h1>}
       </div>
     </div>
   );

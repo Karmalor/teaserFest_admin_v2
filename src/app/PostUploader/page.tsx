@@ -45,7 +45,7 @@ const page = () => {
   }
 
   return (
-    <div className="flex items-center justify-around mt-8">
+    <div className="flex items-center justify-around mt-8 mb-8">
       <div>
         <Form {...form}>
           <form
@@ -155,8 +155,11 @@ const page = () => {
                           selected={calendarValue}
                           onSelect={(date) => {
                             setCalendarValue(date);
-                            setDate(date?.toISOString());
-                            form.setValue("date", date?.toISOString());
+                            setDate(date.toISOString().split("T")[0]);
+                            form.setValue(
+                              "date",
+                              date.toISOString().split("T")[0]
+                            );
 
                             console.log("Calendar Date Selected:", date); // Log selected date from Calendar
                           }}

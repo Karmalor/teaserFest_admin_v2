@@ -81,26 +81,32 @@ const MarketingPostCard = ({ date }: { date: string }) => {
           />
         )}
       </div>
-      <Textarea className="mt-4 h-40" readOnly value={post?.copy} />
+      {post && post!.copy !== "" ? (
+        <div>
+          <Textarea className="mt-4 h-40" readOnly value={post.copy} />
 
-      <div className="flex justify-end mt-2 h-40">
-        <Button
-          className=""
-          onClick={async () => {
-            // Writing text with writeText and a fallback using copy-to-clipboard
+          <div className="flex justify-end mt-2 h-40">
+            <Button
+              className=""
+              onClick={async () => {
+                // Writing text with writeText and a fallback using copy-to-clipboard
 
-            if ("clipboard" in navigator) {
-              await navigator.clipboard.writeText(`${post!.copy}`);
-            } else {
-              copy("await navigator.clipboard.writeText()");
-            }
+                if ("clipboard" in navigator) {
+                  await navigator.clipboard.writeText(`${post!.copy}`);
+                } else {
+                  copy("await navigator.clipboard.writeText()");
+                }
 
-            setCopiedId("write-text");
-          }}
-        >
-          {copied === "write-text" ? "Copy" : "Copy"}
-        </Button>
-      </div>
+                setCopiedId("write-text");
+              }}
+            >
+              {copied === "write-text" ? "Copy" : "Copy"}
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <h1>No post scheduled</h1>
+      )}
     </div>
   );
 };
