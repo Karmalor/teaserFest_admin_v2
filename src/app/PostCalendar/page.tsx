@@ -62,10 +62,10 @@ export default function PostCalendar() {
   console.log("Date", date);
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-items-start justify-center gap-16 md:mt-16">
+    <div className="flex flex-col md:flex-row md:items-start justify-center items-center gap-y-4 gap-x-16 md:mt-16">
       <div>
         <form>
-          <div className="mb-8">
+          <div className="md:mb-8">
             <Label>Select Date</Label>
             {/* <DateSelector name="date" register={register} /> */}
             <Calendar
@@ -81,7 +81,7 @@ export default function PostCalendar() {
                   date?.toISOString().split("T")[0]
                 ); // Log selected date from Calendar
               }}
-              className="mt-4 rounded-md border shadow flex justify-center"
+              className="w-[250px] mt-4 rounded-md border shadow flex justify-center"
             />
           </div>
         </form>
@@ -90,7 +90,7 @@ export default function PostCalendar() {
         <h1 className="w-full"></h1>
 
         {date ? (
-          <div className="w-[250px]">
+          <div className="md:w-[250px]">
             <MarketingPostCard date={date} />
           </div>
         ) : (
