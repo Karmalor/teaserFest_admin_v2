@@ -34,6 +34,7 @@ const MarketingPostCard = ({ date }: { date: string }) => {
   const [copied, setCopiedId] = useState<string>();
   const [copiedText, setCopiedText] = useState<string>();
   const [copiedImage, setCopiedImage] = useState<string>();
+  const [loading, setLoading] = useState(false);
 
   const state = {
     value: "",
@@ -47,6 +48,7 @@ const MarketingPostCard = ({ date }: { date: string }) => {
   //   }, [useTimeout(2000)]);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       const result: MarketingPost[] = await getMarketingPostByDate(
         date.split("T")[0]
@@ -57,55 +59,63 @@ const MarketingPostCard = ({ date }: { date: string }) => {
       if (result) {
         const post: MarketingPost = result[result.length - 1];
         setPost(post);
+        setLoading(false);
       } else {
         setPost({
           imageUrl: null,
           copy: null,
           date: null,
         });
+        setLoading(false);
       }
     };
     fetchData();
   }, [date]);
 
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center">
-        {post?.imageUrl && (
-          <Image
-            src={post?.imageUrl}
-            alt="imageUrl"
-            width={250}
-            height={250}
-            className="rounded-md"
-          />
-        )}
-      </div>
-      {post && post!.copy !== "" ? (
+    <div className="w-[250px]">
+      {!loading ? (
         <div>
-          <Textarea className="mt-4 h-40" readOnly value={post.copy} />
-
-          <div className="flex justify-end mt-2 h-40">
-            <Button
-              className=""
-              onClick={async () => {
-                // Writing text with writeText and a fallback using copy-to-clipboard
-
-                if ("clipboard" in navigator) {
-                  await navigator.clipboard.writeText(`${post!.copy}`);
-                } else {
-                  copy("await navigator.clipboard.writeText()");
-                }
-
-                setCopiedId("write-text");
-              }}
-            >
-              {copied === "write-text" ? "Copy" : "Copy"}
-            </Button>
+          <div className="flex flex-col justify-center items-center">
+            {post?.imageUrl && (
+              <Image
+                src={post?.imageUrl}
+                alt="imageUrl"
+                width={250}
+                height={250}
+                className="rounded-md"
+              />
+            )}
           </div>
+          {post && post!.copy !== "" ? (
+            <div>
+              <Textarea className="mt-4 h-40" readOnly value={post.copy} />
+
+              <div className="flex justify-end mt-2 h-40">
+                <Button
+                  className=""
+                  onClick={async () => {
+                    // Writing text with writeText and a fallback using copy-to-clipboard
+
+                    if ("clipboard" in navigator) {
+                      await navigator.clipboard.writeText(`${post!.copy}`);
+                    } else {
+                      copy("await navigator.clipboard.writeText()");
+                    }
+
+                    setCopiedId("write-text");
+                  }}
+                >
+                  {copied === "write-text" ? "Copy" : "Copy"}
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <h1>No post scheduled</h1>
+          )}
         </div>
       ) : (
-        <h1>No post scheduled</h1>
+        <h1>Loading...</h1>
       )}
     </div>
   );
