@@ -8,6 +8,7 @@ import { getMarketingPostByDate } from "@/lib/actions/post.actions";
 import copy from "copy-to-clipboard";
 import { useRouter } from "next/navigation";
 import { CreateMarketingPostParams } from "@/types";
+import Link from "next/link";
 
 interface MarketingPost {
   imageUrl?: string | null;
@@ -111,7 +112,12 @@ const MarketingPostCard = ({ date }: { date: string }) => {
               </div>
             </div>
           ) : (
-            <h1>No post scheduled</h1>
+            <div>
+              <h1>No post scheduled</h1>
+              <Link href={"/account/PostUploader"}>
+                <Button className="mt-4">Add post to Calendar</Button>
+              </Link>
+            </div>
           )}
         </div>
       ) : (

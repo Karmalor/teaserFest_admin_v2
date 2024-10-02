@@ -32,8 +32,8 @@ export default async function DemoPage() {
   console.log(Performp);
 
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="text-black font-bold mb-4">
+    <div className=" mx-4 pb-10 md:pr-4">
+      <h1 className="text-black font-bold mb-4 mt-4 md:mt-0">
         Total Applications: {Performp.length - 1}
       </h1>
       <DataTable columns={columns} data={Performp} />

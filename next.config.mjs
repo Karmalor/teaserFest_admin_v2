@@ -33,6 +33,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/account/Performers",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -8,6 +8,10 @@ import { Italiana } from "next/font/google";
 import "./globals.css";
 import BackButton from "@/components/navigation/BackButton";
 import HomeButton from "@/components/navigation/HomeButton";
+// import Header from "@/components/shared/Header";
+import { ClerkProvider, UserButton } from "@clerk/nextjs";
+import { LuMail } from "react-icons/lu";
+import Header from "@/components/navigation/Header";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,16 +38,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={space.className}>
-        <div className="flex items-center justify-between m-4 z-50 ">
-          <div className="flex items-center justify-between gap-2 m-4 z-50 ">
-            <BackButton />
-            <HomeButton />
+    <ClerkProvider>
+      <html lang="en">
+        <body className={space.className}>
+          <div className="sticky top-0 border-b border-b-black bg-[#FFF0F0] mb-4 z-50">
+            <Header />
           </div>
-        </div>
-        {children}
-      </body>
-    </html>
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -21,6 +21,7 @@ import {
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import MarketingPostCard from "@/components/MarketingPostCard";
+import Link from "next/link";
 
 // interface MarketingPost {
 //   imageUrl: string;
@@ -94,7 +95,12 @@ export default function PostCalendar() {
             <MarketingPostCard date={date} />
           </div>
         ) : (
-          <h1>No post scheduled</h1>
+          <div>
+            <h1>No post scheduled</h1>
+            <Link href={"/account/PostUploader"}>
+              <Button className="mt-4">Add post to Calendar</Button>
+            </Link>
+          </div>
         )}
       </div>
     </div>
