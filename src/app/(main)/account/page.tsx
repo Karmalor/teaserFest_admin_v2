@@ -1,7 +1,7 @@
 import React from "react";
 
 function page() {
-  return <div>Pee</div>;
+  return <div>Main</div>;
 }
 
 export default page;
