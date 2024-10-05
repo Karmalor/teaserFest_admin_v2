@@ -82,7 +82,7 @@ export default function PostCalendar() {
                   date?.toISOString().split("T")[0]
                 ); // Log selected date from Calendar
               }}
-              className="w-[250px] mt-4 rounded-md border shadow flex justify-center"
+              className="w-[250px] mt-4 rounded-md border shadow flex justify-centern border-black"
             />
           </div>
         </form>

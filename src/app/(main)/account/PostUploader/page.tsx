@@ -45,13 +45,44 @@ const page = () => {
   }
 
   return (
-    <div className="flex items-center justify-around mt-8 mb-8">
-      <div>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 mt-6"
-          >
+    <div className="flex flex-col md:flex-row md:items-start justify-center items-center gap-y-4 md:mt-16">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col md:flex-row md:items-start justify-center items-center gap-x-16"
+        >
+          <div>
+            <FormLabel>Select Date</FormLabel>
+            <div className="flex items-center justify-center content-center m-2">
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Calendar
+                        mode="single"
+                        selected={calendarValue}
+                        onSelect={(date) => {
+                          setCalendarValue(date);
+                          setDate(date.toISOString().split("T")[0]);
+                          form.setValue(
+                            "date",
+                            date.toISOString().split("T")[0]
+                          );
+
+                          console.log("Calendar Date Selected:", date); // Log selected date from Calendar
+                        }}
+                        className="rounded-md border border-black shadow flex justify-center items-center"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <div>
             <FormField
               control={form.control}
               name="imageUrl"
@@ -129,10 +160,10 @@ const page = () => {
               name="copy"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description Of the Act</FormLabel>
+                  <FormLabel>Copy</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="enter tech notes..."
+                      placeholder="Write copy here..."
                       {...field}
                       className="border border-black h-60"
                     />
@@ -141,37 +172,7 @@ const page = () => {
                 </FormItem>
               )}
             />
-            <div>
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Select Date</FormLabel>
-                    <FormControl>
-                      <div>
-                        <Calendar
-                          mode="single"
-                          selected={calendarValue}
-                          onSelect={(date) => {
-                            setCalendarValue(date);
-                            setDate(date.toISOString().split("T")[0]);
-                            form.setValue(
-                              "date",
-                              date.toISOString().split("T")[0]
-                            );
 
-                            console.log("Calendar Date Selected:", date); // Log selected date from Calendar
-                          }}
-                          className="rounded-md border shadow flex justify-center"
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
             <Button
               type="submit"
               className="my-4"
@@ -179,10 +180,9 @@ const page = () => {
             >
               Submit
             </Button>
-          </form>
-        </Form>
-      </div>
-      {/* <PostExhibitor /> */}
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };
