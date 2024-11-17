@@ -75,7 +75,9 @@ export function DataTable<TData, TValue>({
   return (
     <div className="rounded-md border border-black">
       <Table>
-        <TableHeader>
+        <TableHeader
+           style={{ position: "sticky", top: "4.75rem", zIndex: "100" }}
+          >
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
