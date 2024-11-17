@@ -8,11 +8,7 @@ export default function DateSelector({ name }: { name: string }) {
 
   let dater = date?.toString();
 
-  // console.log(dater);
-
-  const handleChange = () => {
-    console.log("pee");
-  };
+  const handleChange = () => {};
 
   return {
     date,

@@ -40,8 +40,6 @@ const page = () => {
     };
 
     await createMarketingPost(formData);
-
-    console.log(formData);
   }
 
   return (
@@ -70,8 +68,6 @@ const page = () => {
                             "date",
                             date.toISOString().split("T")[0]
                           );
-
-                          console.log("Calendar Date Selected:", date); // Log selected date from Calendar
                         }}
                         className="rounded-md border border-black shadow flex justify-center items-center"
                       />

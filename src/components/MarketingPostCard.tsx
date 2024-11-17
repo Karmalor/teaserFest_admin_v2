@@ -55,8 +55,6 @@ const MarketingPostCard = ({ date }: { date: string }) => {
         date.split("T")[0]
       );
 
-      console.log("result", result);
-
       if (result) {
         const post: MarketingPost = result[result.length - 1];
         setPost(post);

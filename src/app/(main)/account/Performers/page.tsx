@@ -29,7 +29,6 @@ export default async function DemoPage() {
     const result = applications[index].applicantResponse;
     return result;
   });
-  console.log(Performp);
 
   return (
     <div className=" mx-4 pb-10 md:pr-4">

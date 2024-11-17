@@ -2,8 +2,6 @@
 
 import React from "react";
 
-const useAction = async (formData: FormData) => {
-  console.log("Select Date", formData.get("date"));
-};
+const useAction = async (formData: FormData) => {};
 
 export default useAction;

@@ -59,9 +59,6 @@ export default function PostCalendar() {
     setDate(tomorrow.toISOString().split("T")[0]);
   }, []);
 
-  console.log("Calendar Value", calendarValue);
-  console.log("Date", date);
-
   return (
     <div className="flex flex-col md:flex-row md:items-start justify-center items-center gap-y-4 gap-x-16 md:mt-16">
       <div>
@@ -77,10 +74,6 @@ export default function PostCalendar() {
               onSelect={(date) => {
                 setDate(date?.toISOString().split("T")[0]);
                 setCalendarValue(date);
-                console.log(
-                  "Calendar Date Selected:",
-                  date?.toISOString().split("T")[0]
-                ); // Log selected date from Calendar
               }}
               className="w-[250px] mt-4 rounded-md border shadow flex justify-centern border-black"
             />

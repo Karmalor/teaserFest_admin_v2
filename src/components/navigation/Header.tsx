@@ -2,7 +2,14 @@
 
 // import SlickButton from "@/components/custom/SlickButton";
 import { Button } from "/Users/lukasgonzales/Projects/Code/Next/ai-formbuilder/components/ui/button.jsx";
-import { SignInButton, SignedIn, UserButton, useUser } from "@clerk/nextjs";
+import {
+  OrganizationSwitcher,
+  SignInButton,
+  SignedIn,
+  UserButton,
+  useClerk,
+  useUser,
+} from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,6 +20,7 @@ import { LuMail } from "react-icons/lu";
 
 function Header() {
   const { user, isSignedIn } = useUser();
+  const { openSignIn } = useClerk();
   const path = usePathname();
 
   return (
@@ -27,12 +35,12 @@ function Header() {
             <a href="mailto: info@teaserfest.com">
               <LuMail />
             </a>
-
             <UserButton />
+            <OrganizationSwitcher />
           </div>
         </div>
       ) : (
-        <SignInButton>
+        <>
           <div className="flex items-center justify-between m-4 z-50 ">
             <div className="flex items-center justify-between gap-2 m-4 z-50 ">
               <BackButton />
@@ -42,11 +50,10 @@ function Header() {
               <a href="mailto: info@teaserfest.com">
                 <LuMail />
               </a>
-
-              <UserButton />
+              <button onClick={() => openSignIn()}>Sign In</button>
             </div>
           </div>
-        </SignInButton>
+        </>
       )}
     </>
   );

@@ -27,8 +27,6 @@ export default async function Home() {
     throw new Error("Applications not found");
   }
 
-  console.log(applications);
-
   return (
     <div className="flex flex-col md:flex-row md:items-start md:justify-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <Link href={"/account/Performers"}>

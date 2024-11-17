@@ -16,7 +16,6 @@ export default function DateSelector({ name, register }: DateSelectorProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = new Date(event.target.value);
     setDate(selectedDate);
-    console.log("Selected Date:", selectedDate); // Log the selected date
   };
 
   React.useEffect(() => {
@@ -34,7 +33,6 @@ export default function DateSelector({ name, register }: DateSelectorProps) {
         selected={date}
         onSelect={(date) => {
           setDate(date);
-          console.log("Calendar Date Selected:", date); // Log selected date from Calendar
         }}
         className="rounded-md border shadow"
       />

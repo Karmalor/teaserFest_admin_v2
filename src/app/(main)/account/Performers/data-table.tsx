@@ -6,6 +6,8 @@ import {
   getCoreRowModel,
   useReactTable,
   ColumnPinningState,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -32,15 +34,19 @@ export function DataTable<TData, TValue>({
     left: ["selectAndActions", "stageName"],
     right: [],
   });
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onColumnPinningChange: setColumnPinning,
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
 
     state: {
       columnPinning,
+      sorting,
     },
     initialState: {
       columnOrder: ["selectAndActions", "stageName", "showcase", "photo"],
