@@ -23,6 +23,7 @@ import Link from "next/link";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Performer = {
+  index: number;
   stageName: string;
   legalName: string;
   tagline: string;
@@ -47,6 +48,14 @@ export type Performer = {
 };
 
 export const columns: ColumnDef<Performer>[] = [
+  {
+    header: "",
+    id: "row",
+    size: 50,
+    cell: ({ row }) => {
+      return <div> {row.index} </div>;
+    },
+  },
   {
     accessorKey: "stageName",
     size: 75, //starting column size
