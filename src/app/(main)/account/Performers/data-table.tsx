@@ -8,6 +8,9 @@ import {
   ColumnPinningState,
   SortingState,
   getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -20,6 +23,17 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { options } from "./_components/MultiSelect";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -35,6 +49,7 @@ export function DataTable<TData, TValue>({
     right: [],
   });
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
@@ -43,16 +58,23 @@ export function DataTable<TData, TValue>({
     onColumnPinningChange: setColumnPinning,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
 
     state: {
       columnPinning,
       sorting,
+      columnFilters,
     },
     initialState: {
       columnOrder: ["selectAndActions", "stageName", "showcase", "photo"],
       columnPinning: {
         left: [],
         right: [],
+      },
+      pagination: {
+        pageSize: 25,
       },
     },
   });
@@ -80,10 +102,59 @@ export function DataTable<TData, TValue>({
   };
 
   return (
-    <div className="overflow-y-scroll overflow-x-scroll h-screen rounded-md border border-black">
+    <div className="overflow-y-scroll overflow-x-scroll max-h-[80vh] rounded-md border border-black">
+      <div className="flex items-center py-4 px-4 gap-4 sticky left-0 top-0">
+        <Select
+          onValueChange={(value) => {
+            const selectedValue = value !== "All" ? value : undefined;
+            table.getColumn("showcase")?.setFilterValue(selectedValue);
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter by Showcase" />
+          </SelectTrigger>
+          <SelectContent className="bg-[#FFF0F0] z-[100]">
+            <SelectItem value={"All"}>All Performers</SelectItem>
+            <Separator />
+            {options.map((item, index) => (
+              <SelectItem key={index} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Input
+          placeholder="Search performer..."
+          value={
+            (table.getColumn("stageName")?.getFilterValue() as string) ?? ""
+          }
+          onChange={(event) =>
+            table.getColumn("stageName")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
       <Table>
         <TableHeader
-          className="sticky top-0 z-[100]"
+          className="sticky top-0 z-[50]"
           // style={{
           //   position: "sticky",
           //   top: "24px",

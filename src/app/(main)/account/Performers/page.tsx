@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { formSubmissionsTable } from "@/db/schema";
+import { MultiSelect } from "./_components/MultiSelect";
 
 interface Application {
   uuid: string;
@@ -35,7 +36,7 @@ export default async function DemoPage() {
       <h1 className="text-black font-bold mb-4 mt-4 md:mt-0">
         Total Applications: {Performp.length - 1}
       </h1>
-      <DataTable columns={columns} data={Performp} />
+      <DataTable columns={columns} data={applications} />
     </div>
   );
 }

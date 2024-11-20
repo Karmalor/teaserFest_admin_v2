@@ -28,6 +28,7 @@ export const formSubmissionsTable = pgTable("form_submissions", {
   applicationSubmitted: boolean("applicationSubmitted").default(false),
   submittedAt: date("submittedAt"),
   createdAt: date("createdAt"),
+  showcases: text("showcases").array(),
 });
 
 export const applicationOrdersTable = pgTable("application_orders", {

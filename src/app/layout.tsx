@@ -41,7 +41,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={space.className}>
-          <div className="sticky top-0 border-b border-b-black bg-[#FFF0F0] mb-4 z-50">
+          <div className="sticky top-0 border-b border-b-black bg-[#FFF0F0] mb-4 z-[100]">
             <Header />
           </div>
 
