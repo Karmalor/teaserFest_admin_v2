@@ -103,26 +103,35 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="overflow-y-scroll overflow-x-scroll max-h-[80vh] rounded-md border border-black">
-      <div className="flex items-center py-4 px-4 gap-4 sticky left-0 top-0">
-        <Select
-          onValueChange={(value) => {
-            const selectedValue = value !== "All" ? value : undefined;
-            table.getColumn("showcase")?.setFilterValue(selectedValue);
-          }}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Filter by Showcase" />
-          </SelectTrigger>
-          <SelectContent className="bg-[#FFF0F0] z-[100]">
-            <SelectItem value={"All"}>All Performers</SelectItem>
-            <Separator />
-            {options.map((item, index) => (
-              <SelectItem key={index} value={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="flex items- py-4 px-4 gap-4 sticky left-0 top-0">
+        <div className="flex flex-col">
+          <Select
+            onValueChange={(value) => {
+              const selectedValue = value !== "All" ? value : undefined;
+              table.getColumn("showcase")?.setFilterValue(selectedValue);
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter by Showcase" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#FFF0F0] z-[100]">
+              <SelectItem value={"All"}>All Performers</SelectItem>
+              <Separator />
+              {options.map((item, index) => (
+                <SelectItem key={index} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {table.getFilteredRowModel().rows && (
+            <div className="flex gap-2 pl-4 text-sm">
+              <h1>{table.getFilteredRowModel().rows.length}</h1>{" "}
+              <h1> results</h1>
+            </div>
+          )}{" "}
+        </div>
+
         <Input
           placeholder="Search performer..."
           value={
@@ -133,8 +142,8 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <div className="flex  flex-col items-center mt-5">
-          <div className="flex items-center justify-center space-x-2 ">
+        <div className="flex  flex-col items-center">
+          <div className="flex items-center justify-center space-x-2">
             <Button
               variant="outline"
               size="sm"
