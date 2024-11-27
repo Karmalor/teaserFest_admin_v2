@@ -13,6 +13,7 @@ import {
   Check,
   ImageIcon,
   ImageMinus,
+  LucideEdit,
   LucideMusic,
   Video,
   X,
@@ -21,11 +22,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { MultiSelect } from "./_components/MultiSelect";
 import { useState } from "react";
-import { LuX } from "react-icons/lu";
+import { LuView, LuX } from "react-icons/lu";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import ActDetails from "./_components/ActDetails";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Performer = {
+  applicant: string;
   applicantResponse: {
     stageName: string;
     legalName: string;
@@ -78,6 +89,20 @@ export const columns: ColumnDef<Performer>[] = [
       const photo = row.getValue("applicantResponse")?.imageUrl as string;
       return (
         <div className="flex items-center gap-4">
+          <Sheet>
+            <SheetTrigger>
+              <LucideEdit />
+            </SheetTrigger>
+            <SheetContent className=" bg-[#FFF0F0] z-[100] w-full max-w-full sm:w-[75vw] sm:max-w-[75vw]">
+              <SheetHeader>
+                <SheetTitle>{row.getValue("stageName")}</SheetTitle>
+                <SheetDescription>
+                  <ActDetails act={row.getValue("applicantResponse")} />
+                </SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
+
           <div className="h-11 w-11 relative flex-none">
             {photo ? (
               <Link href={`${photo}`} target="_blank" rel="noopener noreferrer">
@@ -148,6 +173,15 @@ export const columns: ColumnDef<Performer>[] = [
             applicationId={row.getValue("uuid")}
           />
         </div>
+      );
+    },
+  },
+  {
+    accessorFn: (row) => row.applicant,
+    header: "eMail",
+    cell: ({ row }) => {
+      return (
+        <h1 className="text-ellipsis line-clamp-1">{row.getValue("eMail")}</h1>
       );
     },
   },

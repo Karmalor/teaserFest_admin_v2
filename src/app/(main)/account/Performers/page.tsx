@@ -3,6 +3,7 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { formSubmissionsTable } from "@/db/schema";
 import { MultiSelect } from "./_components/MultiSelect";
+import { sampleData } from "@/db/sampleData";
 
 interface Application {
   uuid: string;
@@ -26,6 +27,8 @@ export default async function DemoPage() {
 
   const performers = JSON.parse(JSON.stringify(applications));
 
+  console.log(applications[0], applications[2], applications[3]);
+
   const Performp = applications.map((item, index) => {
     const result = applications[index].applicantResponse;
     return result;
@@ -34,9 +37,13 @@ export default async function DemoPage() {
   return (
     <div className=" mx-4 pb-10 md:pr-4">
       <h1 className="text-black font-bold mb-4 mt-4 md:mt-0">
-        Total Applications: {Performp.length - 1}
+        {/* Total Applications: {Performp.length - 1} */}
       </h1>
-      <DataTable columns={columns} data={applications} />
+      <DataTable
+        columns={columns}
+        data={applications}
+        // data={sampleData}
+      />
     </div>
   );
 }
