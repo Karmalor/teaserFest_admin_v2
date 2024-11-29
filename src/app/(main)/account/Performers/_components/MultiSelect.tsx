@@ -167,6 +167,11 @@ export const options = [
     label: "The Opener",
     icon: null,
   },
+  {
+    value: "tropinola",
+    label: "Tropinola",
+    icon: null,
+  },
 ];
 
 export const MultiSelect = React.forwardRef<
