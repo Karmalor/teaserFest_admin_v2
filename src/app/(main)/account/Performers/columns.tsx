@@ -93,7 +93,7 @@ export const columns: ColumnDef<Performer>[] = [
             <SheetTrigger>
               <LucideEdit />
             </SheetTrigger>
-            <SheetContent className=" bg-[#FFF0F0] z-[100] w-full max-w-full sm:w-[75vw] sm:max-w-[75vw]">
+            <SheetContent className="max-w-screen-lg overflow-y-scroll max-h-screen bg-[#FFF0F0] z-[100] w-full sm:w-[75vw] sm:max-w-[75vw]">
               <SheetHeader>
                 <SheetTitle>{row.getValue("stageName")}</SheetTitle>
                 <SheetDescription>
@@ -465,7 +465,13 @@ export const columns: ColumnDef<Performer>[] = [
     id: "showcase",
     accessorKey: "showcases",
     header: "",
-    filterFn: "includesString",
+    filterFn: (row, columnId, filterValue) => {
+      const value = row.getValue(columnId);
+      if (filterValue === "noShowcase") {
+        return Array.isArray(value) && value.length === 0;
+      }
+      return true; // Default for other filters
+    },
     cell: ({ row }) => {
       return null;
     },
