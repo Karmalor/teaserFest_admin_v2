@@ -4,6 +4,7 @@ import { DataTable } from "./data-table";
 import { formSubmissionsTable } from "@/db/schema";
 import { MultiSelect } from "./_components/MultiSelect";
 import { sampleData } from "@/db/sampleData";
+import { desc } from "drizzle-orm";
 
 interface Application {
   uuid: string;
@@ -19,7 +20,7 @@ export default async function DemoPage() {
   const applications: Application[] = await db
     .select()
     .from(formSubmissionsTable)
-    .orderBy(formSubmissionsTable.createdAt);
+    .orderBy(desc(formSubmissionsTable.showcases));
 
   if (!applications) {
     throw new Error("Applications not found");
