@@ -109,7 +109,6 @@ export function DataTable<TData, TValue>({
             onValueChange={(value) => {
               const selectedValue = value !== "All" ? value : undefined;
               table.getColumn("showcase")?.setFilterValue(selectedValue);
-              console.log("showcases", selectedValue);
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -117,7 +116,6 @@ export function DataTable<TData, TValue>({
             </SelectTrigger>
             <SelectContent className="bg-[#FFF0F0] z-[100]">
               <SelectItem value={"All"}>All Performers</SelectItem>
-              <SelectItem value={"noShowcase"}>No Showcases</SelectItem>
               <Separator />
               {options.map((item, index) => (
                 <SelectItem key={index} value={item.value}>
