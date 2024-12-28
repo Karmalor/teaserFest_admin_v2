@@ -485,4 +485,32 @@ export const columns: ColumnDef<Performer>[] = [
       return <div>Submitteed for Competition</div>;
     },
   },
+
+  {
+    accessorFn: (row) => new Date(row.createdAt).getTime(), // Convert to timestamp
+    id: "createdAt",
+    size: 75, //starting column size
+    minSize: 50, //enforced during column resizing
+    maxSize: 100,
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt); // Parse the raw value
+      return (
+        <div className="flex items-center gap-4">
+          {date.toLocaleDateString()} {/* Format as needed */}
+        </div>
+      );
+    },
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created At
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    sortingFn: "basic", // Optional: Ensure sorting works with numbers
+  },
 ];
