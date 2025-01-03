@@ -29,6 +29,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import ActDetails from "./_components/ActDetails";
+import { Input } from "@/components/ui/input";
+import ShowcaseOrderInput from "./_components/ShowcaseOrderInput";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -77,19 +79,38 @@ export const columns: ColumnDef<Performer>[] = [
   //     return <div> {row.index} </div>;
   //   },
   // },
+
   {
-    accessorKey: "order",
+    accessorFn: (row) => row.order, // Convert to timestamp
+    id: "order",
+    size: 75, //starting column size
+    minSize: 50, //enforced during column resizing
+    maxSize: 100,
     cell: ({ row }) => {
+      const order = row.original.order; // Parse the raw value
       return (
-        <div className="flex items-center justify-center gap-4">
-          {row.getValue("order")}
+        <div className="flex items-center gap-4">
+          <ShowcaseOrderInput
+            order={order}
+            applicationId={row.getValue("uuid")}
+          />
         </div>
       );
     },
     header: ({ column }) => {
-      return <div>Order</div>;
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Order
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
+    sortingFn: "basic", // Optional: Ensure sorting works with numbers
   },
+
   {
     accessorKey: "stageName",
     filterFn: "includesString",
@@ -215,6 +236,7 @@ export const columns: ColumnDef<Performer>[] = [
       );
     },
   },
+
   {
     accessorKey: "tagline",
     header: "Tag Line",

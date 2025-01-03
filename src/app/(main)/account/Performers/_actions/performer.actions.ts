@@ -2,7 +2,6 @@
 
 import { db } from "@/db";
 import { formSubmissionsTable, SelectFormSubmission } from "@/db/schema";
-import { applicantResponse } from "@/types";
 import { eq } from "drizzle-orm";
 
 export async function UpdateApplicationById(
@@ -13,6 +12,18 @@ export async function UpdateApplicationById(
     .update(formSubmissionsTable)
     .set({
       showcases: showcaseArray,
+    })
+    .where(eq(formSubmissionsTable.uuid, id));
+}
+
+export async function UpdateShowcaseOrderById(
+  id: SelectFormSubmission["uuid"],
+  order: number
+) {
+  await db
+    .update(formSubmissionsTable)
+    .set({
+      order: order,
     })
     .where(eq(formSubmissionsTable.uuid, id));
 }

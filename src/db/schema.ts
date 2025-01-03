@@ -6,6 +6,7 @@ import {
   json,
   jsonb,
   date,
+  integer,
 } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users_table", {
@@ -29,6 +30,7 @@ export const formSubmissionsTable = pgTable("form_submissions", {
   submittedAt: date("submittedAt"),
   createdAt: date("createdAt"),
   showcases: text("showcases").array(),
+  order: integer("order"),
 });
 
 export const applicationOrdersTable = pgTable("application_orders", {
