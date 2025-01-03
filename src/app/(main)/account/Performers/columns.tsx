@@ -12,17 +12,14 @@ import {
   ArrowUpDown,
   Check,
   ImageIcon,
-  ImageMinus,
   LucideEdit,
   LucideMusic,
   Video,
-  X,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { MultiSelect } from "./_components/MultiSelect";
-import { useState } from "react";
-import { LuView, LuX } from "react-icons/lu";
+import { LuX } from "react-icons/lu";
 import {
   Sheet,
   SheetContent,
@@ -61,6 +58,7 @@ export type Performer = {
     submitToCompetition: boolean;
   };
   index?: number | null;
+  order: number | null;
 };
 
 export const columns: ColumnDef<Performer>[] = [
@@ -71,12 +69,25 @@ export const columns: ColumnDef<Performer>[] = [
       return null;
     },
   },
+  // {
+  //   header: "",
+  //   id: "row",
+  //   size: 50,
+  //   cell: ({ row }) => {
+  //     return <div> {row.index} </div>;
+  //   },
+  // },
   {
-    header: "",
-    id: "row",
-    size: 50,
+    accessorKey: "order",
     cell: ({ row }) => {
-      return <div> {row.index} </div>;
+      return (
+        <div className="flex items-center justify-center gap-4">
+          {row.getValue("order")}
+        </div>
+      );
+    },
+    header: ({ column }) => {
+      return <div>Order</div>;
     },
   },
   {
@@ -95,9 +106,15 @@ export const columns: ColumnDef<Performer>[] = [
             </SheetTrigger>
             <SheetContent className=" bg-[#FFF0F0] z-[100] w-full max-w-full sm:w-[75vw] sm:max-w-[75vw]">
               <SheetHeader>
+                <SheetTitle className="text-4xl">
+                  {row.getValue("showcases")}
+                </SheetTitle>
                 <SheetTitle>{row.getValue("stageName")}</SheetTitle>
                 <SheetDescription>
-                  <ActDetails act={row.getValue("applicantResponse")} />
+                  <ActDetails
+                    act={row.getValue("applicantResponse")}
+                    showcase={"showcase"}
+                  />
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>
