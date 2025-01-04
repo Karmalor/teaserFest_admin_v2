@@ -125,7 +125,7 @@ export const columns: ColumnDef<Performer>[] = [
             <SheetTrigger>
               <LucideEdit />
             </SheetTrigger>
-            <SheetContent className=" bg-[#FFF0F0] z-[100] w-full max-w-full sm:w-[75vw] sm:max-w-[75vw]">
+            <SheetContent className=" bg-[#FFF0F0] z-[100] w-full max-w-full sm:w-[75vw] sm:max-w-[75vw] overflow-scroll">
               <SheetHeader>
                 <SheetTitle className="text-4xl">
                   {row.getValue("showcases")}

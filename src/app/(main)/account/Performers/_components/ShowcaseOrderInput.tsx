@@ -1,12 +1,6 @@
-"use client";
-
 import { Input } from "@/components/ui/input";
 import React from "react";
-import {
-  UpdateApplicationById,
-  UpdateShowcaseOrderById,
-} from "../_actions/performer.actions";
-import { Button } from "@/components/ui/button";
+import { UpdateShowcaseOrderById } from "../_actions/performer.actions";
 
 interface ShowcaseOrderInputProps {
   order: number;
