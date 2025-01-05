@@ -123,12 +123,12 @@ interface MultiSelectProps
 
 export const options = [
   {
-    value: "queen of the striptease",
+    value: "queen-of-the-striptease",
     label: "Queen of the Striptease",
     icon: null,
   },
   {
-    value: "varieTEASE",
+    value: "varietease",
     label: "VarieTEASE",
     icon: null,
   },
@@ -138,17 +138,17 @@ export const options = [
     icon: null,
   },
   {
-    value: "locals only",
+    value: "locals-only",
     label: "Locals Only!",
     icon: null,
   },
   {
-    value: "the champagne gala",
+    value: "the-champagne-gala",
     label: "The Champagne Gala",
     icon: null,
   },
   {
-    value: "the queen's tea",
+    value: "the-queens-tea",
     label: "The Queen's Tea",
     icon: null,
   },
@@ -163,7 +163,7 @@ export const options = [
     icon: null,
   },
   {
-    value: "the opener",
+    value: "the-opener",
     label: "The Opener",
     icon: null,
   },
