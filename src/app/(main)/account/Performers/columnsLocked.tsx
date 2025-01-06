@@ -31,6 +31,7 @@ import {
 import ActDetails from "./_components/ActDetails";
 import { Input } from "@/components/ui/input";
 import ShowcaseOrderInput from "./_components/ShowcaseOrderInput";
+import { currentUser, User } from "@clerk/nextjs/server";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -63,7 +64,7 @@ export type Performer = {
   order: number | null;
 };
 
-export const columns: ColumnDef<Performer>[] = [
+export const columnsLocked: ColumnDef<Performer>[] = [
   {
     accessorKey: "uuid",
     header: "",
@@ -90,10 +91,7 @@ export const columns: ColumnDef<Performer>[] = [
       const order = row.original.order; // Parse the raw value
       return (
         <div className="flex items-center gap-4">
-          <ShowcaseOrderInput
-            order={order}
-            applicationId={row.getValue("uuid")}
-          />
+          <h1>{row.getValue("order")}</h1>
         </div>
       );
     },
@@ -187,19 +185,10 @@ export const columns: ColumnDef<Performer>[] = [
     // id: "showcase",
     accessorKey: "showcases",
     header: "Showcase(s)",
-    cell: ({ row }) => {
+    cell: async ({ row }) => {
       return (
-        <div className="w-[340px]">
-          <MultiSelect
-            // options={frameworksList}
-            // onValueChange={setSelectedFrameworks}
-            defaultValue={row.getValue("showcases")}
-            placeholder="Select showcases"
-            variant="inverted"
-            animation={2}
-            maxCount={3}
-            applicationId={row.getValue("uuid")}
-          />
+        <div className="w-[150px]">
+          <h1>{row.getValue("showcases")}</h1>
         </div>
       );
     },

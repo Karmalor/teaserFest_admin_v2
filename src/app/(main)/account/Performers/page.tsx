@@ -1,10 +1,11 @@
 import { db } from "@/db";
-import { columns } from "./columns";
+import { columns, Performer } from "./columns";
 import { DataTable } from "./data-table";
 import { formSubmissionsTable } from "@/db/schema";
-import { MultiSelect } from "./_components/MultiSelect";
-import { sampleData } from "@/db/sampleData";
 import { desc } from "drizzle-orm";
+import { currentUser } from "@clerk/nextjs/server";
+import { columnsLocked } from "./columnsLocked";
+import { ColumnDef } from "@tanstack/react-table";
 
 interface Application {
   uuid: string;
@@ -17,6 +18,11 @@ interface Application {
 }
 
 export default async function DemoPage() {
+  const user = await currentUser();
+  const userEmail = user?.primaryEmailAddress?.emailAddress;
+
+  console.log(userEmail);
+
   const applications: Application[] = await db
     .select()
     .from(formSubmissionsTable)
@@ -26,14 +32,20 @@ export default async function DemoPage() {
     throw new Error("Applications not found");
   }
 
-  const performers = JSON.parse(JSON.stringify(applications));
+  let tableColumns: ColumnDef<Performer>[] = [];
 
-  console.log(applications[0], applications[2], applications[3]);
+  if (userEmail === "suzanne.s.mcdonald@gmail.com" || "karmalor@gmail.com") {
+    tableColumns = columns;
+  } else {
+    tableColumns = columnsLocked;
+  }
 
-  const Performp = applications.map((item, index) => {
-    const result = applications[index].applicantResponse;
-    return result;
-  });
+  // const performers = JSON.parse(JSON.stringify(applications));
+
+  // const Performp = applications.map((item, index) => {
+  //   const result = applications[index].applicantResponse;
+  //   return result;
+  // });
 
   return (
     <div className=" mx-4 pb-10 md:pr-4">
@@ -41,7 +53,7 @@ export default async function DemoPage() {
         {/* Total Applications: {Performp.length - 1} */}
       </h1>
       <DataTable
-        columns={columns}
+        columns={tableColumns}
         data={applications}
         // data={sampleData}
       />

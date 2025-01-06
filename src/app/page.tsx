@@ -1,9 +1,7 @@
-import ApplicationList from "@/components/ApplicationList";
 import { Button } from "@/components/ui/button";
 import { db } from "@/db";
 import { formSubmissionsTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import Image from "next/image";
+import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 
 interface Application {
@@ -39,6 +37,5 @@ export default async function Home() {
         <Button>Post Uploader</Button>
       </Link>
     </div>
-    // pee
   );
 }

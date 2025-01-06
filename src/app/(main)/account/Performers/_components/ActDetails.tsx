@@ -27,8 +27,6 @@ export type actProps = {
 };
 
 const ActDetails = ({ act }: { act: actProps }) => {
-  console.log(act);
-
   return (
     <div className="flex flex-col md:flex-row gap-4">
       <div className="md:min-w-[500px]">
