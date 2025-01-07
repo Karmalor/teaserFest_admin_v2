@@ -7,6 +7,9 @@ import { currentUser } from "@clerk/nextjs/server";
 import { columnsLocked } from "./columnsLocked";
 import { ColumnDef } from "@tanstack/react-table";
 
+import { CSVDownload, CSVLink } from "react-csv";
+import CSVExportButton from "./_components/CSVExportButton";
+
 interface Application {
   uuid: string;
   applicantResponse:
@@ -47,16 +50,26 @@ export default async function DemoPage() {
   //   return result;
   // });
 
+  const csvData = [
+    ["firstname", "lastname", "email"],
+    ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    ["Raed", "Labes", "rl@smthing.co.com"],
+    ["Yezzi", "Min l3b", "ymin@cocococo.com"],
+  ];
+
   return (
-    <div className=" mx-4 pb-10 md:pr-4">
-      <h1 className="text-black font-bold mb-4 mt-4 md:mt-0">
-        {/* Total Applications: {Performp.length - 1} */}
-      </h1>
-      <DataTable
-        columns={tableColumns}
-        data={applications}
-        // data={sampleData}
-      />
-    </div>
+    <>
+      <div className="mx-4 pb-10 md:pr-4">
+        <h1 className="text-black font-bold mb-4 mt-4 md:mt-0">
+          {/* Total Applications: {Performp.length - 1} */}
+        </h1>
+        <DataTable
+          columns={tableColumns}
+          data={applications}
+          // data={sampleData}
+        />
+        <CSVExportButton data={applications} />
+      </div>
+    </>
   );
 }

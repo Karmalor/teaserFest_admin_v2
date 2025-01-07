@@ -28,9 +28,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
 import ActDetails from "./_components/ActDetails";
 import { Input } from "@/components/ui/input";
 import ShowcaseOrderInput from "./_components/ShowcaseOrderInput";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -65,20 +67,41 @@ export type Performer = {
 
 export const columns: ColumnDef<Performer>[] = [
   {
+    id: "select",
+    size: 56, //starting column size
+
+    header: ({ table }) => (
+      <div className="mx-4">
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+          className="border-white"
+        />
+      </div>
+    ),
+    cell: ({ row }) => (
+      <div className="mx-4">
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     accessorKey: "uuid",
     header: "",
     cell: ({ row }) => {
       return null;
     },
   },
-  // {
-  //   header: "",
-  //   id: "row",
-  //   size: 50,
-  //   cell: ({ row }) => {
-  //     return <div> {row.index} </div>;
-  //   },
-  // },
 
   {
     accessorFn: (row) => row.order, // Convert to timestamp
@@ -114,9 +137,9 @@ export const columns: ColumnDef<Performer>[] = [
   {
     accessorKey: "stageName",
     filterFn: "includesString",
-    size: 75, //starting column size
-    minSize: 50, //enforced during column resizing
-    maxSize: 100,
+    size: 5, //starting column size
+    minSize: 5, //enforced during column resizing
+    maxSize: 10,
     cell: ({ row }) => {
       const photo = row.getValue("applicantResponse")?.imageUrl as string;
       return (

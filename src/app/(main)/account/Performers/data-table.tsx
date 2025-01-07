@@ -34,6 +34,7 @@ import {
 import { options } from "./_components/MultiSelect";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import CSVExportButton from "./_components/CSVExportButton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,11 +46,12 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
-    left: ["selectAndActions", "stageName"],
+    left: ["select", "stageName"],
     right: [],
   });
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -61,14 +63,22 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onRowSelectionChange: setRowSelection,
 
     state: {
       columnPinning,
       sorting,
       columnFilters,
+      rowSelection,
     },
     initialState: {
-      columnOrder: ["selectAndActions", "stageName", "showcase", "photo"],
+      columnOrder: [
+        "select",
+        "selectAndActions",
+        "stageName",
+        "showcase",
+        "photo",
+      ],
       columnPinning: {
         left: [],
         right: [],
@@ -103,6 +113,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="overflow-y-scroll overflow-x-scroll max-h-[80vh] rounded-md border border-black">
+      {/* <div className="flex justify-between items-center"> */}
       <div className="flex items- py-4 px-4 gap-4 sticky left-0 top-0">
         <div className="flex flex-col">
           <Select
@@ -126,10 +137,10 @@ export function DataTable<TData, TValue>({
           </Select>
           {table.getFilteredRowModel().rows && (
             <div className="flex gap-2 pl-4 text-sm">
-              <h1>{table.getFilteredRowModel().rows.length}</h1>{" "}
+              <h1>{table.getFilteredRowModel().rows.length}</h1>
               <h1> results</h1>
             </div>
-          )}{" "}
+          )}
         </div>
 
         <Input
@@ -167,7 +178,21 @@ export function DataTable<TData, TValue>({
             {table.getPageCount()}
           </h3>
         </div>
+        <div className="flex-1 text-sm text-muted-foreground mx-10 items-start justify-center">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="">
+          <Button>
+            <CSVExportButton
+              data={table
+                .getFilteredRowModel()
+                .rows.map((row) => row.getValue("applicantResponse"))}
+            />
+          </Button>
+        </div>
       </div>
+
       <Table>
         <TableHeader
           className="sticky top-0 z-[50]"
