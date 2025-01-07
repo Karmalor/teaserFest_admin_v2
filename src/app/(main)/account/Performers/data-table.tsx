@@ -22,7 +22,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -35,6 +34,8 @@ import { options } from "./_components/MultiSelect";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import CSVExportButton from "./_components/CSVExportButton";
+import { CSVLink } from "react-csv";
+import CSVExportModal from "./_components/CSVExportModal";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -183,13 +184,12 @@ export function DataTable<TData, TValue>({
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
         <div className="">
-          <Button>
-            <CSVExportButton
-              data={table
-                .getFilteredRowModel()
-                .rows.map((row) => row.getValue("applicantResponse"))}
-            />
-          </Button>
+          <CSVExportModal
+            data={table
+              .getFilteredRowModel()
+              .rows.map((row) => row.getValue("applicantResponse"))}
+            fileName={table.getColumn("showcase")?.getFilterValue()}
+          />
         </div>
       </div>
 
