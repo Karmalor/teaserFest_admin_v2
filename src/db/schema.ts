@@ -3,7 +3,6 @@ import {
   text,
   boolean,
   uuid,
-  json,
   jsonb,
   date,
   integer,

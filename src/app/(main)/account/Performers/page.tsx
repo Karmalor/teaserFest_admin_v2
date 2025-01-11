@@ -68,7 +68,6 @@ export default async function DemoPage() {
           data={applications}
           // data={sampleData}
         />
-        <CSVExportButton data={applications} />
       </div>
     </>
   );

@@ -33,8 +33,7 @@ import {
 import { options } from "./_components/MultiSelect";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import CSVExportButton from "./_components/CSVExportButton";
-import { CSVLink } from "react-csv";
+
 import CSVExportModal from "./_components/CSVExportModal";
 
 interface DataTableProps<TData, TValue> {
@@ -112,6 +111,42 @@ export function DataTable<TData, TValue>({
     };
   };
 
+  const showcaseData = table
+    .getFilteredRowModel()
+    .rows.map((row) => row.getValue("applicantResponse"));
+
+  const showcaseDataWithOrder = showcaseData.map((obj, index) => ({
+    ...obj,
+    order: index + 1,
+  }));
+
+  // table.getAllColumns().forEach((column) => {
+  //   const columnId = column.id; // Get column ID
+
+  //   const selectedRows = table.getFilteredRowModel().rows.forEach((row) => {
+  //     showcaseData.push(row.getValue(columnId));
+  //   });
+
+  // const columnId = column.id; // Get column ID
+  // rowData[columnId] = selectedRows.getValue(columnId); // Get value for this column
+  // });
+
+  // const showcaseData = table.getAllColumns().forEach((column) => {
+  //   table.getFilteredRowModel().rows.map((row) => row.getValue(column.id));
+  // });
+  // const rowData = {};
+
+  // const showcaseData = table.getFilteredRowModel().rows.map((row) => {
+  //   table.getAllColumns().forEach((column) => {
+  //     rowData[column.id] = row.getValue(column.id);
+  //   });
+  // });
+
+  // console.log("hi");
+
+  // table.getFilteredRowModel().rows.map((row) => row.getValue("applicantResponse"))
+
+  console.log("Filter Value", columnFilters);
   return (
     <div className="overflow-y-scroll overflow-x-scroll max-h-[80vh] rounded-md border border-black">
       {/* <div className="flex justify-between items-center"> */}
@@ -121,6 +156,11 @@ export function DataTable<TData, TValue>({
             onValueChange={(value) => {
               const selectedValue = value !== "All" ? value : undefined;
               table.getColumn("showcase")?.setFilterValue(selectedValue);
+              table
+                .getColumn("order")
+                ?.toggleSorting(
+                  table.getColumn("order")?.getIsSorted() === "asc"
+                );
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -184,12 +224,19 @@ export function DataTable<TData, TValue>({
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
         <div className="">
-          <CSVExportModal
-            data={table
-              .getFilteredRowModel()
-              .rows.map((row) => row.getValue("applicantResponse"))}
-            fileName={table.getColumn("showcase")?.getFilterValue()}
-          />
+          {columnFilters.length ? (
+            <CSVExportModal
+              data={
+                showcaseDataWithOrder
+                // table
+                // .getFilteredRowModel()
+                // .rows.map((row) => row.getValue("applicantResponse"))
+              }
+              fileName={table.getColumn("showcase")?.getFilterValue()}
+            />
+          ) : (
+            <Button disabled={true}>Select a showcase to export</Button>
+          )}
         </div>
       </div>
 

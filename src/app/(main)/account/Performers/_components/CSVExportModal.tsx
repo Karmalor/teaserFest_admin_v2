@@ -16,6 +16,34 @@ type CSVExportModalProps = {
 };
 
 const CSVExportModal = ({ data, fileName }: CSVExportModalProps) => {
+  const desiredOrder = [
+    "order",
+    "stageName",
+    "tagline",
+    "nameOfAct",
+    "descriptionOfAct",
+    "setupForAct",
+    "breakdownForAct",
+    "soundCues",
+    "techNotes",
+    "lightingRequests",
+    "musicName",
+    "musicUrl",
+    "performanceVideo",
+    "imageUrl",
+    "legalName",
+    "preferredPronouns",
+    "socialMediaLinks",
+  ];
+
+  const rearangedData = data.map((item) => {
+    const orderedItem = {};
+    desiredOrder.forEach((key) => {
+      orderedItem[key] = item[key];
+    });
+    return orderedItem;
+  });
+
   return (
     <div>
       <Dialog>
@@ -29,7 +57,7 @@ const CSVExportModal = ({ data, fileName }: CSVExportModalProps) => {
               Soon there will be functionality for selecting columns,a nd
               arragning before export.
               <Button onClick={() => console.log(fileName)}>
-                <CSVLink data={data} filename={`${fileName}`}>
+                <CSVLink data={rearangedData} filename={`${fileName}`}>
                   Export Showcase
                 </CSVLink>
               </Button>
