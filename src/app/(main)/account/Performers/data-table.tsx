@@ -115,10 +115,16 @@ export function DataTable<TData, TValue>({
     .getFilteredRowModel()
     .rows.map((row) => row.getValue("applicantResponse"));
 
-  const showcaseDataWithOrder = showcaseData.map((obj, index) => ({
-    ...obj,
-    order: index + 1,
-  }));
+  const performerOrder: [] = table
+    .getFilteredRowModel()
+    .rows.map((row) => row.getValue("order"));
+
+  const showcaseDataWithOrder = showcaseData
+    .map((obj, index) => ({
+      ...obj,
+      order: performerOrder[index],
+    }))
+    .sort((a, b) => a.order - b.order);
 
   // table.getAllColumns().forEach((column) => {
   //   const columnId = column.id; // Get column ID
