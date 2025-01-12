@@ -238,7 +238,18 @@ export function DataTable<TData, TValue>({
                 // .getFilteredRowModel()
                 // .rows.map((row) => row.getValue("applicantResponse"))
               }
-              fileName={table.getColumn("showcase")?.getFilterValue()}
+              fileName={`${table
+                .getColumn("showcase")
+                ?.getFilterValue()} - ${new Date().toLocaleString("en-US", {
+                // dateStyle: "full",
+                timeZone: "CST",
+                hour12: true,
+                hour: "numeric",
+                minute: "numeric",
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}`}
             />
           ) : (
             <Button disabled={true}>Select a showcase to export</Button>

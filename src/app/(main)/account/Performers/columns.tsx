@@ -168,7 +168,7 @@ export const columns: ColumnDef<Performer>[] = [
             {photo ? (
               <Link href={`${photo}`} target="_blank" rel="noopener noreferrer">
                 <Image
-                  src={photo}
+                  src={photo || ""}
                   fill
                   className="rounded-sm object-cover"
                   alt="avatar image"

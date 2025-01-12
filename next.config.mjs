@@ -31,6 +31,11 @@ const nextConfig = {
         hostname: "userAgentFromString.io",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "u7f4uei5jk.ufs.sh",
+        pathname: "/**",
+      },
     ],
   },
   async redirects() {
