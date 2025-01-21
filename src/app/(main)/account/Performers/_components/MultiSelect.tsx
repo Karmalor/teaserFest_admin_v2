@@ -163,7 +163,7 @@ export const options = [
   },
   {
     value: "the-opener",
-    label: "The Opener",
+    label: "The Rhinestone Regalia",
     icon: null,
   },
   {

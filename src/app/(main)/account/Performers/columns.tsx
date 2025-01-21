@@ -60,6 +60,11 @@ export type Performer = {
       tikTok?: string;
     };
     submitToCompetition: boolean;
+    paymentMethods?: {
+      venmo?: string;
+      payPal?: string;
+      zelle?: string;
+    };
   };
   index?: number | null;
   order: number | null;
@@ -204,6 +209,72 @@ export const columns: ColumnDef<Performer>[] = [
     size: 0,
     cell: () => {
       return null;
+    },
+  },
+  {
+    accessorFn: (row) => row.applicantResponse.paymentMethods?.venmo,
+    header: "Venmo",
+    cell: ({ row }) => {
+      return (
+        <>
+          <Popover>
+            <PopoverTrigger>
+              <p className="line-clamp-1 text-ellipsis text-left">
+                {row.getValue("applicantResponse")?.paymentMethods?.venmo}
+              </p>
+            </PopoverTrigger>
+            <PopoverContent>
+              <ScrollArea>
+                {row.getValue("applicantResponse")?.paymentMethods?.venmo}
+              </ScrollArea>
+            </PopoverContent>
+          </Popover>
+        </>
+      );
+    },
+  },
+  {
+    accessorFn: (row) => row.applicantResponse.paymentMethods?.payPal,
+    header: "payPal",
+    cell: ({ row }) => {
+      return (
+        <>
+          <Popover>
+            <PopoverTrigger>
+              <p className="line-clamp-1 text-ellipsis text-left">
+                {row.getValue("applicantResponse")?.paymentMethods?.payPal}
+              </p>
+            </PopoverTrigger>
+            <PopoverContent>
+              <ScrollArea>
+                {row.getValue("applicantResponse")?.paymentMethods?.payPal}
+              </ScrollArea>
+            </PopoverContent>
+          </Popover>
+        </>
+      );
+    },
+  },
+  {
+    accessorFn: (row) => row.applicantResponse.paymentMethods?.zelle,
+    header: "Zelle",
+    cell: ({ row }) => {
+      return (
+        <>
+          <Popover>
+            <PopoverTrigger>
+              <p className="line-clamp-1 text-ellipsis text-left">
+                {row.getValue("applicantResponse")?.paymentMethods?.zelle}
+              </p>
+            </PopoverTrigger>
+            <PopoverContent>
+              <ScrollArea>
+                {row.getValue("applicantResponse")?.paymentMethods?.zelle}
+              </ScrollArea>
+            </PopoverContent>
+          </Popover>
+        </>
+      );
     },
   },
   {
