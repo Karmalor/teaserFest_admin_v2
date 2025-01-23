@@ -33,6 +33,7 @@ import ActDetails from "./_components/ActDetails";
 import { Input } from "@/components/ui/input";
 import ShowcaseOrderInput from "./_components/ShowcaseOrderInput";
 import { Checkbox } from "@/components/ui/checkbox";
+import { togglePerformerIsPaid } from "./_actions/performer.actions";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -66,6 +67,7 @@ export type Performer = {
       zelle?: string;
     };
   };
+  isPaid: boolean;
   index?: number | null;
   order: number | null;
 };
@@ -211,6 +213,31 @@ export const columns: ColumnDef<Performer>[] = [
       return null;
     },
   },
+
+  {
+    accessorKey: "isPaid",
+    cell: ({ row }) => {
+      const isPaid = row.getValue("isPaid") as boolean;
+      const performerId = row.getValue("uuid") as string;
+
+      return (
+        <div className="w-[100px] flex items-center justify-center gap-4">
+          <Checkbox
+            defaultChecked={isPaid}
+            onCheckedChange={async () =>
+              await togglePerformerIsPaid(performerId, !isPaid)
+            }
+          />
+        </div>
+      );
+    },
+    header: ({ column }) => {
+      return (
+        <div className="w-[100px] mx-auto flex justify-center">Is Paid</div>
+      );
+    },
+  },
+
   {
     accessorFn: (row) => row.applicantResponse.paymentMethods?.venmo,
     header: "Venmo",

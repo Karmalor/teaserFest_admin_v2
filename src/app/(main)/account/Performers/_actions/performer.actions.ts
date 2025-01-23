@@ -27,3 +27,15 @@ export async function UpdateShowcaseOrderById(
     })
     .where(eq(formSubmissionsTable.uuid, id));
 }
+
+export async function togglePerformerIsPaid(
+  id: SelectFormSubmission["uuid"],
+  paid: boolean
+) {
+  await db
+    .update(formSubmissionsTable)
+    .set({
+      isPaid: paid,
+    })
+    .where(eq(formSubmissionsTable.uuid, id));
+}

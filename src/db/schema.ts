@@ -30,6 +30,7 @@ export const formSubmissionsTable = pgTable("form_submissions", {
   createdAt: date("createdAt"),
   showcases: text("showcases").array(),
   order: integer("order"),
+  isPaid: boolean("isPaid"),
 });
 
 export const applicationOrdersTable = pgTable("application_orders", {
