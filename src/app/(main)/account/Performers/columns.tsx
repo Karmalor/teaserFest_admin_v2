@@ -225,7 +225,7 @@ export const columns: ColumnDef<Performer>[] = [
           <Checkbox
             defaultChecked={isPaid}
             onCheckedChange={async () =>
-              await togglePerformerIsPaid(performerId, !isPaid)
+              await togglePerformerIsPaid(performerId)
             }
           />
         </div>
